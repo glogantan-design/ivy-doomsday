@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ivy Day 2026 - The Day of Reckoning</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #080808;
+            --accent-gold: #C5B358;
+            --accent-crimson: #8C1515;
+            --text-main: #e0e0e0;
+            --text-sub: #a0a0a0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Spectral', serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: radial-gradient(circle at center, #121212 0%, #080808 100%);
+        }
+
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            box-shadow: inset 0 0 200px rgba(0,0,0,0.9);
+            z-index: 10;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            z-index: 5;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            letter-spacing: 0.5rem;
+            color: var(--accent-gold);
+            margin: 0;
+            text-shadow: 0 0 15px rgba(197, 179, 88, 0.3);
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--text-sub);
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+            letter-spacing: 0.1rem;
+        }
+
+        #countdown {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 4rem;
+            z-index: 5;
+        }
+
+        .time-box {
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .time-value {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            display: block;
+            line-height: 1;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .time-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2rem;
+            color: var(--text-sub);
+            margin-top: 0.5rem;
+        }
+
+        .seals-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+            max-width: 800px;
+            z-index: 5;
+        }
+
+        .seal {
+            width: 80px;
+            height: 80px;
+            filter: grayscale(1) brightness(0.7) contrast(1.2);
+            transition: all 0.5s ease;
+            opacity: 0.6;
+        }
+
+        .seal:hover {
+            filter: grayscale(0) brightness(1);
+            opacity: 1;
+            transform: scale(1.1) translateY(-5px);
+            drop-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .anxiety-zone {
+            text-align: center;
+            z-index: 5;
+            margin-top: 2rem;
+        }
+
+        #anxiety-btn {
+            background: transparent;
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            padding: 1rem 2rem;
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #anxiety-btn:hover {
+            background: rgba(197, 179, 88, 0.1);
+            box-shadow: 0 0 20px rgba(197, 179, 88, 0.2);
+        }
+
+        #anxiety-btn:active {
+            transform: scale(0.98);
+        }
+
+        #anxiety-count {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            font-family: 'Spectral', serif;
+            font-style: italic;
+        }
+
+        .shake {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+        }
+
+        @media (max-width: 600px) {
+            #countdown { gap: 1rem; }
+            .time-value { font-size: 2.5rem; }
+            .time-box { min-width: 60px; }
+            .seals-container { grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+            .seal { width: 50px; height: 50px; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="vignette"></div>
+
+    <header>
+        <h1>Ivy Day 2026</h1>
+        <p class="subtitle">Fate will be revealed. Prepare accordingly.</p>
+    </header>
+
+    <div id="countdown">
+        <div class="time-box">
+            <span id="days" class="time-value">00</span>
+            <span class="time-label">Days</span>
+        </div>
+        <div class="time-box">
+            <span id="hours" class="time-value">00</span>
+            <span class="time-label">Hours</span>
+        </div>
+        <div class="time-box">
+            <span id="minutes" class="time-value">00</span>
+            <span class="time-label">Minutes</span>
+        </div>
+        <div class="time-box">
+            <span id="seconds" class="time-value">00</span>
+            <span class="time-label">Seconds</span>
+        </div>
+    </div>
+
+    <div class="seals-container">
+        <img class="seal" src="https://upload.wikimedia.org/wikipedia/en/2/29/Harvard_shield.svg" alt="Harvard" title="Harvard">
+        <img class="seal" src="https://upload.wikimedia.org/wikipedia/en/2/22/Yale_University_Shield.svg" alt="Yale" title="Yale">
+        <img class="seal" src="https://upload.wikimedia.org/wikipedia/en/7/71/Princeton_shield.svg" alt="Princeton" title="Princeton">
+        <img class="seal" src="https://upload.wikimedia.org/wikipedia/en/3/30/Columbia_University_coat_of_arms.svg" alt="Columbia" title="Columbia">
+        <img class="seal" src="https://upload.wikimedia.org/wikipedia/en/9/92/University_of_Pennsylvania_shield.svg" alt="UPenn" title="University of Pennsylvania">
+        <img class="seal" src="https://upload.wikimedia.org/wikipedia/en/a/ac/Brown_University_coat_of_arms.svg" alt="Brown" title="Brown">
+        <img class="seal" src="https://upload.wikimedia.org/wikipedia/en/e/e4/Dartmouth_College_coat_of_arms.svg" alt="Dartmouth" title="Dartmouth">
+        <img class="seal" src="https://upload.wikimedia.org/wikipedia/commons/4/47/Cornell_University_seal.svg" alt="Cornell" title="Cornell">
+    </div>
+
+    <div class="anxiety-zone">
+        <button id="anxiety-btn">PRESS IF ANXIOUS</button>
+        <span id="anxiety-count">Anxiety Level: 0</span>
+    </div>
+
+    <script>
+        // Target: March 26, 2026 at 7:00 PM EDT
+        // 7:00 PM EDT is 23:00 UTC
+        const targetDate = new Date('2026-03-26T19:00:00-04:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+
+            if (diff <= 0) {
+                document.getElementById('countdown').innerHTML = "<div class='time-value'>THE MOMENT HAS ARRIVED</div>";
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = String(days).padStart(2, '0');
+            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Anxiety Button Logic
+        const anxietyBtn = document.getElementById('anxiety-btn');
+        const anxietyDisplay = document.getElementById('anxiety-count');
+        
+        let count = parseInt(localStorage.getItem('ivy_anxiety_count')) || 0;
+        anxietyDisplay.innerText = `Anxiety Level: ${count}`;
+
+        anxietyBtn.addEventListener('click', () => {
+            count++;
+            localStorage.setItem('ivy_anxiety_count', count);
+            anxietyDisplay.innerText = `Anxiety Level: ${count}`;
+            
+            // Add shake effect
+            anxietyBtn.classList.remove('shake');
+            void anxietyBtn.offsetWidth; // Trigger reflow
+            anxietyBtn.classList.add('shake');
+
+            // Subtle sound effect could go here, but sticking to visual for silence compliance
+        });
+    </script>
+</body>
+</html>
